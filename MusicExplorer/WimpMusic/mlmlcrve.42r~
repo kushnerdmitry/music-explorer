@@ -1,0 +1,102 @@
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using MusicExplorer.Common;
+using MusicExplorer.WimpMusic.Model;
+using NLog;
+
+namespace MusicExplorer.WimpMusic {
+    public static class WimpHelpers {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        public static async Task<IEnumerable<ShortBandInfo>> SearchBand(string search, CancellationToken token = default) {
+            var cached = WimpCache.ReadSearchBand(search);
+            if (cached != null)
+                return cached;
+
+            var url = UriComposer.GetArtistsSearchUrl(search);
+
+            var html = await Utils.WithRetry(() => SeleniumRequests.GetHtml(url, token));
+
+            var results = Parsing.BandsInfoFromSearchResults(html).ToArray();
+
+            WimpCache.SaveSearchBand(search, results);
+
+            return results;
+        }
+
+        public static async Task<ShortBandInfo> SearchBandExact(string search, CancellationToken token = default) {
+            var bands = await SearchBand(search, token);
+            return bands.FirstOrDefault(x => x.Name == search);
+        }
+
+        public static async Task<DetailedBandInfo> GetDetailedBandInfo(ShortBandInfo info) {
+            var cached = WimpCache.ReadDetailedBandInfo(info.Id);
+            if (cached != null)
+                return cached;
+
+            var html = await SeleniumRequests.GetHtml(info.Uri, CancellationToken.None);
+            var parsed = Parsing.BandInfoFromDetailsPage(html, info);
+
+            WimpCache.SaveDetailedBandInfo(parsed);
+
+            return parsed;
+        }
+
+        public static async Task<DetailedAlbumInfo> GetDetailedAlbumInfo(ShortAlbumInfo info) {
+            var cached = WimpCache.ReadDetailedAlbumInfo(info.Id);
+            if (cached != null)
+                return cached;
+                        
+            var parsed = await Utils.WithRetry(async () => {
+                var html = await SeleniumRequests.GetHtml(info.Url, CancellationToken.None);
+                return Parsing.AlbumInfoFromDetailsPage(html, info);
+            });
+
+            WimpCache.SaveDetailedAlbumInfo(parsed);
+
+            return parsed;
+        }
+
+        public static async Task SaveAllAlbumArts(
+            DetailedBandInfo bandInfo,
+            NotificationsSource<DetailedAlbumInfo>? notifications = null,
+            CancellationToken token = default
+        ) {
+            Logger.Debug($"Getting all albums for {bandInfo.ShortInfo}");
+
+            //TODO parallel
+            foreach (var albumInfo in bandInfo.AlbumInfos) {
+                token.ThrowIfCancellationRequested();
+
+                Logger.Debug($"Getting detailed album info for {albumInfo}");
+                var detailedAlbumInfo = await GetDetailedAlbumInfo(albumInfo);
+
+                token.ThrowIfCancellationRequested();
+
+                Logger.Debug($"Saving art from detailed album info {detailedAlbumInfo}");
+                notifications?.Notify(detailedAlbumInfo);
+                SaveUtils.SaveAlbumArt(detailedAlbumInfo);
+            }
+        }
+
+        public static async Task SaveAllAlbumArts(
+            ShortBandInfo bandInfo,
+            NotificationsSource<DetailedAlbumInfo>? notifications = null,
+            CancellationToken token = default
+        ) {
+            var detailedInfo = await GetDetailedBandInfo(bandInfo);
+            await SaveAllAlbumArts(detailedInfo, notifications, token);
+        }
+
+        public static async Task SaveAllAlbumArts(
+            string bandName,
+            NotificationsSource<DetailedAlbumInfo>? notifications = null,
+            CancellationToken token = default
+        ) {
+            var shortBandInfo = await SearchBandExact(bandName);
+            await SaveAllAlbumArts(shortBandInfo, notifications, token);
+        }
+    }
+}

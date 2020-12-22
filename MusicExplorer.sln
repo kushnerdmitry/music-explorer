@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicExplorer.Old", "MusicExplorer\MusicExplorer.Old.csproj", "{D070E594-7CE9-4A74-AE5B-5E2E78DD39AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicExplorer.UI", "MusicExplorer.UI\MusicExplorer.UI.csproj", "{740DB077-E2D9-489E-AD08-D1180413EBD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WimpMusic.Api", "WimpMusic.Api\WimpMusic.Api.csproj", "{394C5FCA-6F7B-4A86-885B-77240CD6DEF5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{17D20B9F-7D81-444A-B5AE-29B8FB00FD27} = {17D20B9F-7D81-444A-B5AE-29B8FB00FD27}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WimpMusic.Api.Model", "WimpMusic.Api.Model\WimpMusic.Api.Model.csproj", "{17D20B9F-7D81-444A-B5AE-29B8FB00FD27}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D070E594-7CE9-4A74-AE5B-5E2E78DD39AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D070E594-7CE9-4A74-AE5B-5E2E78DD39AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D070E594-7CE9-4A74-AE5B-5E2E78DD39AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D070E594-7CE9-4A74-AE5B-5E2E78DD39AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{740DB077-E2D9-489E-AD08-D1180413EBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{740DB077-E2D9-489E-AD08-D1180413EBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{740DB077-E2D9-489E-AD08-D1180413EBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{740DB077-E2D9-489E-AD08-D1180413EBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{394C5FCA-6F7B-4A86-885B-77240CD6DEF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394C5FCA-6F7B-4A86-885B-77240CD6DEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394C5FCA-6F7B-4A86-885B-77240CD6DEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394C5FCA-6F7B-4A86-885B-77240CD6DEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17D20B9F-7D81-444A-B5AE-29B8FB00FD27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17D20B9F-7D81-444A-B5AE-29B8FB00FD27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17D20B9F-7D81-444A-B5AE-29B8FB00FD27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17D20B9F-7D81-444A-B5AE-29B8FB00FD27}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1A507FC4-4E5C-450C-9EEA-01F067E8E02F}
+	EndGlobalSection
+EndGlobal

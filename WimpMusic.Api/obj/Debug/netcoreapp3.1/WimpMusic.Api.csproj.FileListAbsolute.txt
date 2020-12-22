@@ -1,0 +1,4 @@
+E:\Проекты\music-explorer\MusicExplorer\WimpMusic.Api\bin\Debug\netcoreapp3.1\WimpMusic.Api.Model.dll
+E:\Проекты\music-explorer\MusicExplorer\WimpMusic.Api\obj\Debug\netcoreapp3.1\WimpMusic.Api.csprojAssemblyReference.cache
+E:\Проекты\music-explorer\MusicExplorer\WimpMusic.Api\obj\Debug\netcoreapp3.1\WimpMusic.Api.AssemblyInfoInputs.cache
+E:\Проекты\music-explorer\MusicExplorer\WimpMusic.Api\obj\Debug\netcoreapp3.1\WimpMusic.Api.AssemblyInfo.cs

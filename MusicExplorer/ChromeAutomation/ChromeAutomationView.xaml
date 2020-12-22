@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="MusicExplorer.Old.ChromeAutomation.ChromeAutomationView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:chromeAutomation="clr-namespace:MusicExplorer.Old.ChromeAutomation"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <chromeAutomation:ChromeAutomationViewModel x:Key="ViewModel" />
+    </UserControl.Resources>
+
+    <UserControl.DataContext>
+        <StaticResource ResourceKey="ViewModel" />
+    </UserControl.DataContext>
+
+    <StackPanel>
+        <Button
+            Content="Найти вкладки"
+            Command="{Binding FindTabsCommand}" />
+
+        <ListBox
+            ItemsSource="{Binding TabNames}" />
+    </StackPanel>
+</UserControl>

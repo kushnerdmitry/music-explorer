@@ -1,0 +1,40 @@
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace MusicExplorer.Common {
+    public static class Utils {
+        private const int RetriesCount = 10;
+
+        /*public static T WithRetry<T>(Func<T> func, int retries = RetriesCount) {
+            Exception ex = null;
+
+            foreach (var i in Enumerable.Range(1, retries)) {
+                try {
+                    return func();
+                } catch (Exception e) //when (ex == null i < retries)
+        {
+                    if (ex == null)
+                        ex = e;
+                }
+            }
+
+            throw ex;
+        }*/
+
+        public static async Task<T> WithRetry<T>(Func<Task<T>> func, int retries = RetriesCount) {
+            Exception ex = null;
+
+            foreach (var i in Enumerable.Range(1, retries)) {
+                try {
+                    return await func();
+                } catch (Exception e) /*when ( i < retries)*/ {
+                    if (ex == null)
+                        ex = e;
+                }
+            }
+
+            return await Task.FromException<T>(ex);
+        }
+    }
+}
